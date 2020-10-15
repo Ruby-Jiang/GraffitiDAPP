@@ -1,64 +1,124 @@
 App = {
   web3Provider: null,
   contracts: {},
+  account: '0x0',
+  hasPainted: false,
 
-  init: async function() {
-    // Load pets.
-    $.getJSON('../pets.json', function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
-
-      for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-breed').text(data[i].breed);
-        petTemplate.find('.pet-age').text(data[i].age);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
-
-        petsRow.append(petTemplate.html());
-      }
-    });
-
-    return await App.initWeb3();
+  init: function() {
+    return App.initWeb3();
   },
 
-  initWeb3: async function() {
-    /*
-     * Replace me...
-     */
-
+  initWeb3: function() {
+    // TODO: refactor conditional
+    if (typeof web3 !== 'undefined') {
+      // If a web3 instance is already provided by Meta Mask.
+      App.web3Provider = web3.currentProvider;
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      // Specify default instance if no web3 instance provided
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      web3 = new Web3(App.web3Provider);
+    }
     return App.initContract();
   },
 
   initContract: function() {
-    /*
-     * Replace me...
-     */
+    $.getJSON("Graffiti.json", function(graffiti) {
+      // Instantiate a new truffle contract from the artifact
+      App.contracts.Graffiti = TruffleContract(graffiti);
+      // Connect provider to interact with contract
+      App.contracts.Graffiti.setProvider(App.web3Provider);
 
-    return App.bindEvents();
+      App.listenForEvents();
+
+      return App.render();
+    });
   },
 
-  bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
+  // Listen for events emitted from the contract
+  listenForEvents: function() {
+    App.contracts.Graffiti.deployed().then(function(instance) {
+      // Restart Chrome if you are unable to receive this event
+      // This is a known issue with Metamask
+      // https://github.com/MetaMask/metamask-extension/issues/2393
+      instance.paintedEvent({}, {
+        fromBlock: 0,
+        toBlock: 'latest'
+      }).watch(function(error, event) {
+        console.log("event triggered", event)
+        // Reload when a new paint is recorded
+        App.render();
+      });
+    });
   },
 
-  markAdopted: function() {
-    /*
-     * Replace me...
-     */
+  render: function() {
+    var graffitiInstance;
+    var loader = $("#loader");
+    var content = $("#content");
+
+    loader.show();
+    content.hide();
+
+    // Load account data
+    web3.eth.getCoinbase(function(err, account) {
+      if (err === null) {
+        App.account = account;
+        $("#accountAddress").html("Your Account: " + account);
+      }
+    });
+
+    // Load contract data
+    App.contracts.Graffiti.deployed().then(function(instance) {
+      graffitiInstance = instance;
+      return graffitiInstance.paintersCount();
+    }).then(function(paintersCount) {
+      var paintersResults = $("#paintersResults");
+      paintersResults.empty();
+
+      var paintersSelect = $('#paintersSelect');
+      paintersSelect.empty();
+
+      for (var i = 1; i <= paintersCount; i++) {
+        graffitiInstance.painters(i).then(function(painter) {
+          var id = painter[0];
+          var name = painter[1];
+          var paintContent = painter[2];
+
+          // Render painter Result
+          var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + paintContent + "</td></tr>"
+          paintersResults.append(painterTemplate);
+
+          // Render painter ballot option
+          var painterOption = "<option value='" + id + "' >" + name + "</ option>"
+          paintersSelect.append(painterOption);
+        });
+      }
+      return graffitiInstance.paint(App.account);
+    }).then(function(hasPainted) {
+      // Do not allow a user to paint
+      if(hasPainted) {
+        $('form').hide();
+      }
+      loader.hide();
+      content.show();
+    }).catch(function(error) {
+      console.warn(error);
+    });
   },
 
-  handleAdopt: function(event) {
-    event.preventDefault();
-
-    var petId = parseInt($(event.target).data('id'));
-
-    /*
-     * Replace me...
-     */
+  castPaint: function() {
+    var painterId = $('#paintersSelect').val();
+    App.contracts.Graffiti.deployed().then(function(instance) {
+      return instance.paint(painterId, { from: App.account });
+    }).then(function(result) {
+      // Wait for painters to update
+      $("#content").hide();
+      $("#loader").show();
+    }).catch(function(err) {
+      console.error(err);
+    });
   }
-
 };
 
 $(function() {
