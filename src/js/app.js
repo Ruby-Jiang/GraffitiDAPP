@@ -29,26 +29,7 @@ App = {
       // Connect provider to interact with contract
       App.contracts.Graffiti.setProvider(App.web3Provider);
 
-      App.listenForEvents();
-
       return App.render();
-    });
-  },
-
-  // Listen for events emitted from the contract
-  listenForEvents: function() {
-    App.contracts.Graffiti.deployed().then(function(instance) {
-      // Restart Chrome if you are unable to receive this event
-      // This is a known issue with Metamask
-      // https://github.com/MetaMask/metamask-extension/issues/2393
-      instance.paintedEvent({}, {
-        fromBlock: 0,
-        toBlock: 'latest'
-      }).watch(function(error, event) {
-        console.log("event triggered", event)
-        // Reload when a new paint is recorded
-        App.render();
-      });
     });
   },
 
@@ -76,8 +57,8 @@ App = {
       var paintersResults = $("#paintersResults");
       paintersResults.empty();
 
-      var paintersSelect = $('#paintersSelect');
-      paintersSelect.empty();
+      // var paintersSelect = $('#paintersSelect');
+      // paintersSelect.empty();
 
       for (var i = 1; i <= paintersCount; i++) {
         graffitiInstance.painters(i).then(function(painter) {
@@ -90,15 +71,9 @@ App = {
           paintersResults.append(painterTemplate);
 
           // Render painter ballot option
-          var painterOption = "<option value='" + id + "' >" + name + "</ option>"
-          paintersSelect.append(painterOption);
+          // var painterOption = "<option value='" + id + "' >" + name + "</ option>"
+          // paintersSelect.append(painterOption);
         });
-      }
-      return graffitiInstance.paint(App.account);
-    }).then(function(hasPainted) {
-      // Do not allow a user to paint
-      if(hasPainted) {
-        $('form').hide();
       }
       loader.hide();
       content.show();
@@ -106,19 +81,6 @@ App = {
       console.warn(error);
     });
   },
-
-  castPaint: function() {
-    var painterId = $('#paintersSelect').val();
-    App.contracts.Graffiti.deployed().then(function(instance) {
-      return instance.paint(painterId, { from: App.account });
-    }).then(function(result) {
-      // Wait for painters to update
-      $("#content").hide();
-      $("#loader").show();
-    }).catch(function(err) {
-      console.error(err);
-    });
-  }
 };
 
 $(function() {
