@@ -8,6 +8,8 @@ contract Graffiti{
         string name;
         string paintContent;
     }
+    // Store accounts that have voted
+    mapping(address => bool) public observers;
     // Store Painters
     // Fetch Painter
     mapping(uint => Painter) public painters;
@@ -24,4 +26,25 @@ contract Graffiti{
         paintersCount++;
         painters[paintersCount] = Painter(paintersCount, _name, "");
     }
+
+    function paint(uint _painterId, string memory content) public{
+        //check painted
+        require(!observers[msg.sender]);
+
+        //require valid paint
+        require(_painterId > 0 && _painterId <= paintersCount);
+
+        // record that painter has painted? maynot be used.
+        observers[msg.sender] = true;
+        
+        // update paint content
+        painters[_painterId].paintContent = content;
+    }
+
+
+    // web3 accounts getting:
+    // web3.eth.getAccounts()
+    // get the first account:
+    // web3.eth.getAccounts().then(function(i){Acc = i})
+    // Acc[0]
 }
