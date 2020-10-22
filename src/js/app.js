@@ -53,7 +53,7 @@ App = {
       ethereum.enable().then(function(acc){
           App.account = acc[0];
           $("#accountAddress").html("Your Account: " + App.account);
-          // console.log(web3.currentProvider.selectedAddress);
+          console.log(web3.currentProvider.selectedAddress);
       });
     }
 
@@ -65,8 +65,8 @@ App = {
       var paintersResults = $("#paintersResults");
       paintersResults.empty();
 
-      // var paintersSelect = $('#paintersSelect');
-      // paintersSelect.empty();
+      var paintersSelect = $('#paintersSelect');
+      paintersSelect.empty();
 
       for (var i = 1; i <= paintersCount; i++) {
         graffitiInstance.painters(i).then(function(painter) {
@@ -75,20 +75,40 @@ App = {
           var paintContent = painter[2];
 
           // Render painter Result
-          var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + paintContent + "</td></tr>"
+          var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + paintContent + "</td></tr>";
           paintersResults.append(painterTemplate);
 
           // Render painter ballot option
-          // var painterOption = "<option value='" + id + "' >" + name + "</ option>"
-          // paintersSelect.append(painterOption);
+          var painterOption = "<option value='" + id + "' >" + name + "</ option>";
+          paintersSelect.append(painterOption);
         });
       }
+      return graffitiInstance.observers(App.account);
+    }).then(function(hasPainted){
+      if(hasPainted){
+        $('form').hide();
+      }
       loader.hide();
-      content.show();
+      content.show(); 
     }).catch(function(error) {
       console.warn(error);
     });
   },
+
+
+  castPaint: function(){
+    var painterId = $('#paintersSelect').val();
+    var paintContent = $('#paintContent').val();
+    App.contracts.Graffiti.deployed().then(function(instance) {
+      return instance.paint(painterId, paintContent,{ from: App.account });
+    }).then(function(result) {
+      // Wait for votes to update
+      $("#content").hide();
+      $("#loader").show();
+    }).catch(function(err) {
+      console.error(err);
+    });
+  }
 };
 
 $(function() {
@@ -96,3 +116,4 @@ $(function() {
     App.init();
   });
 });
+
