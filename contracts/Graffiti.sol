@@ -5,7 +5,7 @@ contract Graffiti{
     // Model a painter
     struct Painter{
         uint id;
-        string name;
+        address name;
         string paintContent;
     }
     // Store accounts that have voted
@@ -15,16 +15,23 @@ contract Graffiti{
     mapping(uint => Painter) public painters;
     // Store Painters Count
     uint public paintersCount;
+    // uint public pixel_length = 10;
+    // uint public pixel_width = 15;
     // Constructor
 
     constructor() public {
-        addPainter("Painter 1");
-        addPainter("Painter 2");
-    }
-
-    function addPainter (string memory _name) private{
-        paintersCount++;
-        painters[paintersCount] = Painter(paintersCount, _name, "");
+        // for(uint i = 0; i < pixel_length; i++){
+        //     for(uint j = 0; j < pixel_width; j++){
+        //         addPainter([i,j],"");
+        //     }
+        // }
+        painters[0].id = 0;
+        painters[0].name = 0x24297175ab32608b51Edf6AC0C30F9004f44CDF5;
+        painters[0].paintContent = "";
+        painters[1].id = 1;
+        painters[1].name = 0x24297175ab32608b51Edf6AC0C30F9004f44CDF5;
+        painters[1].paintContent = "";
+        paintersCount = 2;
     }
 
     function paint(uint _painterId, string memory content) public{
@@ -34,11 +41,18 @@ contract Graffiti{
         //require valid paint
         require(_painterId > 0 && _painterId <= paintersCount);
 
+        // string storage sender = realaddress[msg.sender];
+
         // record that painter has painted? maynot be used.
         observers[msg.sender] = true;
         
         // update paint content
-        painters[_painterId].paintContent = content;
+        if (_painterId < paintersCount){
+            painters[_painterId].paintContent = content;
+            painters[_painterId].name = msg.sender;
+        }else
+            paintersCount++;
+            painters[paintersCount-1] = Painter(_painterId, msg.sender, content);
     }
 
 
