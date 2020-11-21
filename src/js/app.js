@@ -62,31 +62,32 @@ App = {
       graffitiInstance = instance;
       return graffitiInstance.paintersCount();
     }).then(function(paintersCount) {
+
       var paintersResults = $("#paintersResults");
       paintersResults.empty();
 
       var paintersSelect = $('#paintersSelect');
       paintersSelect.empty();
 
-      for (var i = 1; i <= paintersCount; i++) {
+      for (var i = 0; i < paintersCount; i++) {
         graffitiInstance.painters(i).then(function(painter) {
           var id = painter[0];
           var name = painter[1];
           var paintContent = painter[2];
 
           // Render painter Result
-          var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + paintContent + "</td></tr>";
+          var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td style='font-family: monospace;'>" + paintContent + "</td></tr>";
           paintersResults.append(painterTemplate);
 
           // Render painter ballot option
-          var painterOption = "<option value='" + id + "' >" + name + "</ option>";
+          var painterOption = "<option value='" + id + "' >" + id + "</option>";
           paintersSelect.append(painterOption);
         });
       }
       return graffitiInstance.observers(App.account);
     }).then(function(hasPainted){
       if(hasPainted){
-        $('form').hide();
+        // $('form').hide();
       }
       loader.hide();
       content.show(); 
@@ -102,7 +103,6 @@ App = {
     App.contracts.Graffiti.deployed().then(function(instance) {
       return instance.paint(painterId, paintContent,{ from: App.account });
     }).then(function(result) {
-      // Wait for votes to update
       $("#content").hide();
       $("#loader").show();
     }).catch(function(err) {

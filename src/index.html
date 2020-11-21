@@ -21,13 +21,14 @@
     <div class="container" style="width: 650px;">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="text-center">Graffiti Results</h1>
+          <h1 class="text-center">Platform</h1>
           <hr/>
           <br/>
           <div id="loader">
             <p class="text-center">Loading...</p>
           </div>
           <div id="content" style="display: none;">
+            <div id="editor"></div>
             <table class="table">
               <thead>
                 <tr>
@@ -42,10 +43,9 @@
             <hr/>
             <form onSubmit="App.castPaint(); return false;">
               <div class="form-group">
-                <label for="paintersSelect">Select Painter</label>
-                <select class="form-control" id="paintersSelect">
-                </select>
-                <input type="text" id="paintContent"></input>
+                <input class="form-control" id="paintersSelect">
+              </input>
+                <textarea type="text" id="paintContent" style="font-size: 18px; font-family: monospace;"></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Paint</button>
               <hr/>
@@ -55,6 +55,8 @@
         </div>
       </div>
     </div>
+
+    
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

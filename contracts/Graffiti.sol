@@ -26,28 +26,25 @@ contract Graffiti{
         //     }
         // }
         painters[0].id = 0;
-        painters[0].name = 0x24297175ab32608b51Edf6AC0C30F9004f44CDF5;
-        painters[0].paintContent = "";
-        painters[1].id = 1;
-        painters[1].name = 0x24297175ab32608b51Edf6AC0C30F9004f44CDF5;
-        painters[1].paintContent = "";
-        paintersCount = 2;
+        painters[0].name = 0xADb766CD8c67A91e07738E4e1D8719559975DA6f;
+        painters[0].paintContent = "Hello";
+        paintersCount = 1;
     }
 
     function paint(uint _painterId, string memory content) public{
         //check painted
-        require(!observers[msg.sender]);
+        // require(!observers[msg.sender]);
 
         //require valid paint
-        require(_painterId > 0 && _painterId <= paintersCount);
+        require(_painterId >= 0);
 
         // string storage sender = realaddress[msg.sender];
 
         // record that painter has painted? maynot be used.
-        observers[msg.sender] = true;
+        // observers[msg.sender] = true;
         
         // update paint content
-        if (_painterId < paintersCount){
+        if (_painterId <= paintersCount){
             painters[_painterId].paintContent = content;
             painters[_painterId].name = msg.sender;
         }else
