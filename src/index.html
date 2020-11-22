@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/game.css" rel="stylesheet">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Graffiti Results</title>
 
@@ -18,6 +19,7 @@
     <![endif]-->
   </head>
   <body>
+    <div id="#platform"></div>
     <div class="container" style="width: 650px;">
       <div class="row">
         <div class="col-lg-12">
@@ -35,6 +37,7 @@
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">paintContent</th>
+                  <th scope="col">start</th>
                 </tr>
               </thead>
               <tbody id="paintersResults">
@@ -65,5 +68,18 @@
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/platform.js"></script>
+    <!-- <script src="js/level.js"></script> -->
+    <script>
+        if (typeof module != "undefined" && module.exports && (typeof window == "undefined" || window.exports != exports))
+            module.exports = GAME_LEVELS;
+        if (typeof global != "undefined" && !global.GAME_LEVELS)
+            global.GAME_LEVELS = GAME_LEVELS;
+        function playlevel(level){
+          var GAME_LEVELS = [level];
+          console.log(level);
+          runGame(GAME_LEVELS, DOMDisplay);
+        }    
+    </script>
   </body>
 </html>

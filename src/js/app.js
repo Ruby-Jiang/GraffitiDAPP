@@ -62,7 +62,6 @@ App = {
       graffitiInstance = instance;
       return graffitiInstance.paintersCount();
     }).then(function(paintersCount) {
-
       var paintersResults = $("#paintersResults");
       paintersResults.empty();
 
@@ -75,8 +74,11 @@ App = {
           var name = painter[1];
           var paintContent = painter[2];
 
+
           // Render painter Result
-          var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td style='font-family: monospace;'>" + paintContent + "</td></tr>";
+          var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td style='font-family: monospace;'>" + 
+          paintContent + "</td><td>" + "<button type='button' onclick='playlevel(" +
+          '`'+ paintContent + '`' + ")'>play</button>" + "</td></tr>";
           paintersResults.append(painterTemplate);
 
           // Render painter ballot option
