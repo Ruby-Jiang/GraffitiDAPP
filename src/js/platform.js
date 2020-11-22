@@ -121,7 +121,7 @@ function elt(name, attrs, ...children) {
 
 class DOMDisplay{
     constructor(parent, level){
-        this.dom = elt("platform", {class: "game"}, drawGrid(level));
+        this.dom = elt("div", {class: "game"}, drawGrid(level));
         this.actorLayer = null;
         parent.appendChild(this.dom);
     }
@@ -315,7 +315,7 @@ function runAnimation(frameFunc) {
 }
 
 function runLevel(level, Display) {
-    let display = new Display(document.body, level);
+    let display = new Display(document.querySelector("#platform"), level);
     let state = State.start(level);
     let ending = 1;
     return new Promise(resolve => {

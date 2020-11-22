@@ -78,7 +78,7 @@ App = {
           // Render painter Result
           var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td style='font-family: monospace;'>" + 
           paintContent + "</td><td>" + "<button type='button' onclick='playlevel(" +
-          '`'+ paintContent + '`' + ")'>play</button>" + "</td></tr>";
+          '`'+ paintContent+ '`' + ")'>play</button>" + "</td></tr>";
           paintersResults.append(painterTemplate);
 
           // Render painter ballot option
