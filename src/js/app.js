@@ -68,7 +68,7 @@ App = {
       var paintersSelect = $('#paintersSelect');
       paintersSelect.empty();
 
-      for (var i = 0; i < paintersCount; i++) {
+      for (var i = 0; i <= paintersCount; i++) {
         graffitiInstance.painters(i).then(function(painter) {
           var id = painter[0];
           var name = painter[1];

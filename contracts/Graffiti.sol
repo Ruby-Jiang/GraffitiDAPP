@@ -28,7 +28,7 @@ contract Graffiti{
         painters[0].id = 0;
         painters[0].name = 0xADb766CD8c67A91e07738E4e1D8719559975DA6f;
         painters[0].paintContent = "Hello";
-        paintersCount = 1;
+        paintersCount = 0;
     }
 
     function paint(uint _painterId, string memory content) public{
@@ -47,9 +47,11 @@ contract Graffiti{
         if (_painterId <= paintersCount){
             painters[_painterId].paintContent = content;
             painters[_painterId].name = msg.sender;
-        }else
+        }else{
             paintersCount++;
-            painters[paintersCount-1] = Painter(_painterId, msg.sender, content);
+            painters[paintersCount] = Painter(paintersCount, msg.sender, content);
+        }
+            
     }
 
 
