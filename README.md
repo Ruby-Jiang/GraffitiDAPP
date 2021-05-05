@@ -8,7 +8,7 @@ Distributed Graffti APP
 ![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/account.png)
 
 # Input ASCII & Transaction
-![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/account.png)
+![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/payment.png)
 
 # Game play
 ![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/ASCII.gif)
