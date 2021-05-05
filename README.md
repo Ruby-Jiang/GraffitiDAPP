@@ -2,19 +2,18 @@
 Distributed Graffti APP
 
 # website review
-![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/wholepage.png)
-<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/wholepage.png" width="500" />
+<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/wholepage.png" width="700" />
 
 # Connect to MetaMask
-![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/account.png)
+<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/account.png" width="700" />
 
 # Input ASCII & Transaction
-![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/payment.png)
+<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/payment.png" width="700" />
 
 # Game play
-![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/ASCII.gif)
+<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/ASCII.gif" width="700" />
 
-![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/ASCIImove.gif)
+<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/ASCIImove.gif" width="700" />
 
 
  
