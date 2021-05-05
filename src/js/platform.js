@@ -1,6 +1,7 @@
 class Level{
     constructor(plan){
         let rows = plan.trim().split("\n").map(l => [...l]);
+        console.log(rows);
         this.height = rows.length;
         this.width = rows[0].length;
         this.startActors = [];
@@ -338,8 +339,7 @@ function runLevel(level, Display) {
 
 async function runGame(plans, Display) {
     for (let level = 0; level < plans.length;) {
-      let status = await runLevel(new Level(plans[level]),
-                                  Display);
+      let status = await runLevel(new Level(plans[level]), Display);                          
       if (status == "won") level++;
     }
     console.log("You've won!");

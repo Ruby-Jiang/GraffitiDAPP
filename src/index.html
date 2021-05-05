@@ -1,3 +1,4 @@
+<!-- Ganache: SELECTIVE-LOSS -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/game.css" rel="stylesheet">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Graffiti Results</title>
+    <title>Edit ASCII</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -22,7 +23,7 @@
     <div class="container" style="width: 650px;">
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="text-center">Platform</h1>
+          <h2 class="text-center">Edit ASCII</h2>
           <p id="accountAddress" class="text-center"></p>
           <hr/>
           <br/>
@@ -31,14 +32,14 @@
           </div>
           <div class="container" id="platform"></div>
           <div id="content" style="display: none;">
-            <div id="editor"></div>
-            <table class="table">
+            <div id="platform"></div>
+            <table class="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">paintContent</th>
-                  <th scope="col">start</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Content</th>
+                  <th scope="col">Start</th>
                 </tr>
               </thead>
               <tbody id="paintersResults">
@@ -47,9 +48,11 @@
             <hr/>
             <form onSubmit="App.castPaint(); return false;">
               <div class="form-group">
-                <input class="form-control" id="paintersSelect">
-              </input>
-                <textarea type="text" id="paintContent" style="font-size: 18px; font-family: monospace;"></textarea>
+                <label class="text-left">Select level: </label>
+                <select maxlength="5" id="paintersSelect"></select>
+              </div>
+              <div class="form-group"></div>
+                <textarea type="text" id="paintContent" rows="6" cols="30" style="font-size: 18px; font-family: monospace;"></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Paint</button>
               <hr/>

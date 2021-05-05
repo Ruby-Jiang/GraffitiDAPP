@@ -77,15 +77,21 @@ App = {
 
           // Render painter Result
           var painterTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td style='font-family: monospace;'>" + 
-          paintContent + "</td><td>" + "<button type='button' onclick='playlevel(" +
+          paintContent + "</td><td>" + "<button type='button' class='btn btn-primary' onclick='playlevel(" +
           '`'+ paintContent+ '`' + ")'>play</button>" + "</td></tr>";
           paintersResults.append(painterTemplate);
 
           // Render painter ballot option
-          var painterOption = "<option value='" + id + "' >" + id + "</option>";
-          paintersSelect.append(painterOption);
+          if(App.account == name){
+            var painterOption = "<option value='" + id + "' >" + id + "</option>";
+            paintersSelect.append(painterOption);
+          }
+
         });
       }
+      var painterAdd = parseInt(paintersCount) + 1;
+      var painterOption = "<option value='" + painterAdd  + "' >" + painterAdd  + " ( new level )</option>";
+      paintersSelect.append(painterOption);
       return graffitiInstance.observers(App.account);
     }).then(function(hasPainted){
       if(hasPainted){
