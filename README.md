@@ -3,7 +3,7 @@ Distributed Graffti APP
 
 # website review
 ![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/wholepage.png)
-<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/wholepage.png" width="100" />
+<img src="https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/wholepage.png" width="500" />
 
 # Connect to MetaMask
 ![alt text](https://github.com/Ruby-Jiang/GraffitiDAPP/blob/main/images/account.png)
